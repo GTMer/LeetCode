@@ -1,0 +1,10 @@
+//a * x + b * y = z (a,b can be negative)
+
+//so, z is a multiple of gcd(x, y)
+
+class Solution {
+public:
+    bool canMeasureWater(int x, int y, int z) {
+        return z == 0 || z <= x + y && z % __gcd(x, y) == 0;
+    }
+};
