@@ -1,0 +1,27 @@
+//the key is to transform string into int(binary number, each number embodys a letter)
+//, so that the equal() function need O(1) rather than O(N), N is the length of two words.
+
+//unordered_map VS map. unordered_map's derivate by hash_map, using more space although find() needs O(1).
+
+class Solution {
+public:
+    int maxProduct(vector<string>& words) {
+        int maxPro = 0;
+        unordered_map<int,int> maxlen;
+        for(auto word : words){
+            int mask = 0;
+            for(auto c : word){
+                mask |= (1 << c - 'a');                
+            }
+            if(word.length() > maxlen[mask]){
+                maxlen[mask] = word.length();
+                for(auto maskAndLen : maxlen){
+                    if(!(maskAndLen.first & mask)){
+                        maxPro = max(maxPro, maskAndLen.second * maxlen[mask]);
+                    }
+                }
+            }
+        }
+        return maxPro;
+    }
+};
