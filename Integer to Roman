@@ -1,0 +1,114 @@
+//This question is very easy, after you understand roman numeral.
+//The number 3999 is unique, so that we can shorter our code.
+
+//ordinary code
+class Solution {
+public:
+    string fourth(int num) {
+        if (num == 0) return "";
+        string s;
+        while(num --) {
+            s+="M";
+        }
+        return s;
+    }
+    
+    string third(int num){
+        if (num == 0) return "";
+        string s;
+        if(num < 4){
+            while(num --){
+                s += "C";
+            }
+            return s;
+        }
+        else if(num == 4) {
+            return "CD";
+        }
+        else if(num < 9){
+            s += "D";
+            num -= 5;
+            while(num--){
+                s += "C";
+            }
+            return s;
+        }
+        else{
+            return "CM";
+        }
+    }
+    
+    string second(int num) {
+        if (num == 0) return "";
+        string s;
+        if(num < 4){
+            while(num --){
+                s += "X";
+            }
+            return s;
+        }
+        else if(num == 4) {
+            return "XL";
+        }
+        else if(num < 9){
+            s += "L";
+            num -= 5;
+            while(num--){
+                s += "X";
+            }
+            return s;
+        }
+        else{
+            return "XC";
+        }
+    }
+    
+    string first(int num) {
+        if (num == 0) return "";
+        string s;
+        if(num < 4){
+            while(num --){
+                s += "I";
+            }
+            return s;
+        }
+        else if(num == 4) {
+            return "IV";
+        }
+        else if(num < 9){
+            s += "V";
+            num -= 5;
+            while(num--){
+                s += "I";
+            }
+            return s;
+        }
+        else{
+            return "IX";
+        }
+    }
+    
+    string intToRoman(int num) {
+        return fourth(num / 1000) + third(num % 1000 / 100) + second(num % 100 / 10) + first(num % 10);
+    }
+};
+
+//shorter one
+class Solution {
+public:
+    string intToRoman(int num) {
+        static const int ns[] =   {2000,1000, 900,500, 400, 300, 200,100,  90, 50,  40, 30,  20, 10,  9,   5,   4,  30, 2,  1};
+        static const char* ss[] = {"MM", "M","CM","D","CD","CCC","CC","C","XC","L","XL","XXX","XX","X","IX","V","IV","III","II","I"};
+        string s;
+        //use reverse() to avoid reallocate string 
+        //void reserve( size_type size ); sets the capacity of the string to at least size. 
+        s.reverse(64);                   
+        for (auto i = 0; num > 0; ++i) {
+            if (num >= ns[i]) {
+                num -= ns[i];
+                s += ss[i];
+            }
+        }
+        return s;
+    }
+};
