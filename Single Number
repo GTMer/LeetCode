@@ -1,0 +1,33 @@
+//The key is that 1.A XOR A = 0 2.XOR operator is commutative
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int res = 0;
+        for(auto num : nums){         // foreach loop uses items rather than pointers
+            res ^= num;
+        }
+        return res;
+    }
+};
+
+
+//my wrong code considered using XOR but storages binary number, so only denotes positive small numbers
+//lack a further step T_T
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        if(nums.size() == 1){
+            return nums[0];
+        }
+        nums[0] = 1 << nums[0];
+        for(int i = 1; i < nums.size(); i++){
+            nums[0] ^= 1 << nums[i];
+        }
+        nums[1] = -1;
+        while(nums[0] > 0){
+            nums[1] ++;
+            nums[0] >>= 1;               // >> don't change original number
+        }
+        return nums[1];
+    }
+};
