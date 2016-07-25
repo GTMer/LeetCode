@@ -1,0 +1,35 @@
+//"without extra space" typically means O(1) additional space.
+
+// my code. 84ms
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0) return false;
+        if (x == 0) return true;
+        int totalLength = log10(x) + 1;
+        int cpLength = totalLength / 2;
+        int frontNum = x / pow(10,totalLength - cpLength);
+        int endNum = 0;
+        for(int i = 0, k = pow(10,cpLength - 1); i < cpLength; i++, k /= 10){
+            endNum += x % 10 * k;
+            x /= 10;
+        }
+        return frontNum == endNum;
+    }
+};
+
+// the code using same principle but shorter and faster. 72ms
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0 || x != 0 && x % 10 == 0) return false;    //0 in the end will cause problem when dragged to front
+        int sum = 0;
+        while(x > sum){
+            sum  = sum * 10 + x % 10;
+            x /= 10;
+        }
+        if(x == sum || x == sum / 10)
+            return true;
+        return false;
+    }
+};
