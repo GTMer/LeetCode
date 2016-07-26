@@ -1,0 +1,48 @@
+//there are many different ways, such as Newtown iteration and system sqrt() fuction.
+//AC code, binary search
+class Solution {
+public:
+    int mySqrt(int x) {
+        if(x == 2147483647)
+            return 46340;
+        
+        int a = 0; int b = 46341;
+        while(a < b - 1){
+            int mid = (a + b) / 2;
+            if(mid * mid > x)
+                b = mid;
+            else if(mid * mid < x)
+                a = mid;
+            else
+                return mid;
+        }
+        return a;
+    }
+};
+
+//TLE code, not need to calculate all sqr[], the calculate times may be 10+.
+class Solution {
+public:
+    int mySqrt(int x) {
+        int sqr[46342];
+        for(int i = 0; i < 46341; i++){
+            sqr[i] = i * i;
+        }
+        sqr[46341] = 2147483647;
+        if(x == 2147483647)
+            return 46340;
+        
+        int a = 0; int b = 46341;
+        while(a < b - 1){
+            int mid = (a + b) / 2;
+            if(sqr[mid] > x)
+                b = mid;
+            else if(sqr[mid] < x)
+                a = mid;
+            else
+                return mid;
+        }
+        return a;
+    }
+};
+
