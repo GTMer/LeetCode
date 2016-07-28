@@ -1,5 +1,6 @@
-//use unordered_set to store nums1, and find items in nums2.
-//beats 85.44%. If change to set, only beats 19.77%
+//use unordered_set to store nums1, and find items in nums2. O(n) beats 85.44%.
+// If change to set, only beats 19.77%(O(nlogn))
+//there are another two O(nlogn) ways, sort two nums and sort nums1 then binary search.
 class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
