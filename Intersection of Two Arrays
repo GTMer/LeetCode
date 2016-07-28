@@ -1,0 +1,22 @@
+//use unordered_set to store nums1, and find items in nums2.
+//beats 85.44%. If change to set, only beats 19.77%
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> inter;
+        if(nums1.size() == 0 || nums2.size() == 0)
+            return inter;
+        inter.reserve(min(nums1.size(), nums2.size()));
+        unordered_set<int> num;
+        for(auto item : nums1){
+            num.insert(item);
+        }
+        for(auto item : nums2){
+            if(num.find(item) != num.end()){
+                inter.push_back(item);
+                num.erase(item);
+            }
+        }
+        return inter;
+    }
+};
