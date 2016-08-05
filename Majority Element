@@ -1,0 +1,18 @@
+//Boyer–Moore majority vote algorithm, O(n)
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int count = 0, candi = 0;
+        for(auto item : nums){
+            if(count == 0) {
+                candi = item;
+                count = 1;
+            }
+            else if(candi != item) 
+                count --;
+            else
+                count ++;
+        }
+        return candi;
+    }
+};
