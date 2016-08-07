@@ -1,0 +1,45 @@
+//拿到题目要敢放手去做，动手去比划比划就能想到方法。
+//开始时想到的方法是设两个数组保存前后数字的乘积。
+//要求里不适用额外空间，因此想到用结果保存一部分，一个temp变量循环中保存另一部分。
+//可以更简单的啊，用两个temp，一个保存前面，一个保存后面，一趟跑完！！！
+//beats 21%
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int length = nums.size();
+        vector<int> res(length);
+        res[length - 1] = 1;
+        for(int i = length - 1; i > 0; i--) {
+            res[i - 1] = res[i] * nums[i];
+        }
+        for(int i = 1, temp = nums[0]; i <= length - 1; temp *= nums[i], i++){
+            res[i] *= temp;
+        }
+        return res;
+    }
+};
+
+//时间相同
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int length = nums.size();
+        int * leftProduct = new int[length];
+        int * rightProduct =  new int[length];
+        leftProduct[0] = nums[0];
+        for(int i = 1; i <= length - 1; i++) {
+            leftProduct[i] = leftProduct[i - 1] * nums[i];
+        }
+        rightProduct[length - 1] = nums[length - 1];
+        for(int i = length - 2; i >= 0; i--) {
+            rightProduct[i] = rightProduct[i + 1] * nums[i];
+        }
+        vector<int> res(length);
+        res[0] = rightProduct[1];
+        res[length - 1] = leftProduct[length - 2];
+        for(int i = 1; i < length - 1; i++) {
+            res[i] = leftProduct[i - 1] * rightProduct[i + 1];
+        }
+        return res;
+    }
+};
