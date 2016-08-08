@@ -1,0 +1,29 @@
+//Spend a few hours solving it without any help.
+//I can do it.
+//only beats 24% T-T
+//不需要用set和map，排序后循环的时候算一下个数就可以了。
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res{{}};
+        if(nums.size() == 0)
+            return res;
+        set<int> specimen;
+        map<int, int> numsOfNums;
+        for(int i = 0; i < nums.size(); i++) {
+            specimen.insert(nums[i]);
+            numsOfNums[nums[i]]++;
+        }
+        for(auto n : specimen) {
+            int length = res.size();
+            for(int i = 0; i < length; i++) {
+                auto temp = res[i];
+                for(int j = 1; j <= numsOfNums[n]; j++) {
+                    temp.push_back(n);
+                    res.push_back(temp);
+                }
+            }
+        }
+        return res;
+    }
+};
