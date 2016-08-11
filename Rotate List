@@ -1,0 +1,29 @@
+//The fastest code by myself!
+|----------------------|     
+1 -> 2 -> 3 -> 4 -> 5 -> NULL
+             |____________|
+//First find the preEnd, and we know the length at the same time.
+//Then find the newEnd, just move (length - k % length) steps.
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (head == NULL)
+            return NULL;
+        ListNode * preEnd = head, * newEnd = head;
+        int length = 1;
+        while(preEnd->next != NULL){
+            length++;
+            preEnd = preEnd->next;
+        }
+        if (k % length == 0) {
+            return head;
+        }
+        for(int i = 1; i < length - k % length; i++) {
+            newEnd = newEnd->next;
+        }
+        ListNode * newStart = newEnd->next;
+        newEnd->next = NULL;
+        preEnd->next = head;
+        return newStart;
+    }
+};
