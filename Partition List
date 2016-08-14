@@ -1,0 +1,68 @@
+//not hard, just use two fake head.
+//v0.0, 12ms
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode s1(0), s2(0);
+        ListNode * spre = &s1, * bpre = &s2;
+        for(ListNode * pt = head; pt != NULL; pt = pt->next) {
+            if(pt->val < x) {
+                spre->next = pt;
+                spre = pt;
+            }
+            else {
+                bpre->next = pt;
+                bpre = pt;
+            }
+        }
+        spre->next = s2.next;
+        bpre->next = NULL;
+        return s1.next == NULL ? s2.next : s1.next;
+    }
+};
+
+//It's amazing that integrate two equal saving 4ms
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode s1(0), s2(0);
+        ListNode * spre = &s1, * bpre = &s2;
+        for(ListNode * pt = head; pt != NULL; pt = pt->next) {
+            if(pt->val < x) {
+                spre = spre->next = pt;      //here changed
+            }
+            else {
+                bpre = bpre->next = pt;
+                
+            }
+        }
+        spre->next = s2.next;
+        bpre->next = NULL;
+        return s1.next == NULL ? s2.next : s1.next;
+    }
+};
+
+//v0.1, 8ms too, but may be faster in some condition.
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode s1(0), s2(0);
+        ListNode * pre1 = &s1, * pre2 = &s2;
+        while(head != NULL) {
+            if(head->val < x){           //just need to change pre1->next once when numbers all smaller or bigger.
+                pre1->next = head;       
+                while(head!=NULL && head->val < x) {
+                    pre1 = head;                      
+                    head = head->next;
+                }
+            }
+            pre2->next = head;
+            while(head!=NULL && head->val >= x){
+                pre2 = head;
+                head = head->next;
+            }
+        }
+        pre1->next = s2.next;
+        return s1.next;
+    }
+};
