@@ -1,0 +1,37 @@
+//two ways, using unordered_map or vector/int[26](only 26 letters)
+//my original solution 88ms, unordered_map. Don't noticed that there're only 26 letters T_T.
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        unordered_map<char, int> hash;
+        for(auto item : magazine) {
+            hash[item]++;
+        }
+        for(auto item : ransomNote) {
+            if(hash[item] > 0){
+                hash[item]--;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+//use vector. 32ms
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        vector<int> chs(26,0);
+        for(auto item : magazine) {
+            chs[item-'a']++;
+        }
+        for(auto item : ransomNote) {
+            if(--chs[item-'a'] < 0){
+                return false;
+            }
+        }
+        return true;
+    }
+};
