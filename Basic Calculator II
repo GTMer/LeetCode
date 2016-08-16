@@ -1,0 +1,37 @@
+//It takes about 2hours T-T
+//c, 4ms, best time.
+bool remSpace(char * s, int * pt){
+    while(s[*pt] == ' ')   (*pt)++;
+    return s[*pt] == NULL ? true : false;
+}
+
+int getNum(char * s, int * pt) {
+    int num = s[*pt] - '0';
+    while(isdigit(s[*pt + 1])){
+        num = num * 10 + s[++(*pt)] - '0';
+    }
+    return num < 0 ? -num : num;
+}
+
+int calculate(char * s) {
+    int pre = 0, res = 0, pt = 0;
+    if(remSpace(s, &pt)) return pre;
+    res = getNum(s, &pt);
+    while(true){
+        if(remSpace(s, &pt)) return res + pre;
+        switch(s[pt]) {
+            case '+' : pt++;    pre += res;                  //forget to add pt, it takes about half an hour T_T
+                        remSpace(s, &pt);                      //originally using recursion, but some test is too long, RE
+                        res = getNum(s, &pt); break;
+            case '-' : pt++;    pre += res;
+                        remSpace(s, &pt);
+                        res = - getNum(s, &pt); break;
+            case '*' : pt++;    remSpace(s, &pt);
+                        res *= getNum(s, &pt);   break;
+            case '/' : pt++;    remSpace(s, &pt);
+                        res /= getNum(s, &pt);   break;
+
+        }
+        pt++;
+    }
+}
